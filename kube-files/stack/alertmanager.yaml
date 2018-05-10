@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: alertmanager
+  labels:
+    app: alertmanager
+spec:
+  serviceAccountName: prometheus
+  containers:
+  - name: alertmanager
+    image: prom/alertmanager
+    args:
+    - --config.file=/etc/alertmanager/alertmanager.yml
+    ports:
+    - containerPort: 9093
+    volumeMounts:
+    - name: alertmanager-config-vol
+      mountPath: "/etc/alertmanager/"
+      readOnly: true
+    env:
+    - name: GF_PATHS_PROVISIONING
+      value: "/data/provisioning"
+  volumes:
+  - name: alertmanager-config-vol
+    projected:
+      sources:
+      - configMap:
+          name: alertmanager-config
