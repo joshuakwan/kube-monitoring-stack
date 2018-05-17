@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: almond
+  namespace: monitoring
+  labels:
+    app: almond
+spec:
+  serviceAccountName: prometheus
+  containers:
+  - name: almond
+    image: joshuakwan/kubeplay

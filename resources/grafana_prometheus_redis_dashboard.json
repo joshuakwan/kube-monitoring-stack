@@ -112,7 +112,7 @@
           },
           "targets": [
             {
-              "expr": "redis_uptime_in_seconds{kubernetes_pod =\"$pod\"}",
+              "expr": "redis_uptime_in_seconds{redis_address =\"$redis_address\"}",
               "intervalFactor": 2,
               "legendFormat": "",
               "metric": "",
@@ -193,7 +193,7 @@
           },
           "targets": [
             {
-              "expr": "redis_connected_clients{kubernetes_pod =\"$pod\"}",
+              "expr": "redis_connected_clients{redis_address =\"$redis_address\"}",
               "intervalFactor": 2,
               "legendFormat": "",
               "metric": "",
@@ -276,7 +276,7 @@
           },
           "targets": [
             {
-              "expr": "100 * (redis_memory_used_bytes{kubernetes_pod=~\"$pod\"}  / redis_memory_max_bytes{kubernetes_pod=~\"$pod\"} )",
+              "expr": "100 * (redis_memory_used_bytes{redis_address=~\"$redis_address\"}  / redis_memory_max_bytes{redis_address=~\"$redis_address\"} )",
               "intervalFactor": 2,
               "legendFormat": "",
               "metric": "",
@@ -337,7 +337,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "rate(redis_commands_processed_total{kubernetes_pod=~\"$pod\"}[5m])",
+              "expr": "rate(redis_commands_processed_total{redis_address=~\"$redis_address\"}[5m])",
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "",
@@ -418,7 +418,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "irate(redis_keyspace_hits_total{kubernetes_pod =\"$pod\"}[5m])",
+              "expr": "irate(redis_keyspace_hits_total{redis_address =\"$redis_address\"}[5m])",
               "hide": false,
               "interval": "",
               "intervalFactor": 2,
@@ -429,7 +429,7 @@
               "target": ""
             },
             {
-              "expr": "irate(redis_keyspace_misses_total{kubernetes_pod =\"$pod\"}[5m])",
+              "expr": "irate(redis_keyspace_misses_total{redis_address =\"$redis_address\"}[5m])",
               "hide": false,
               "interval": "",
               "intervalFactor": 2,
@@ -522,7 +522,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "redis_memory_used_bytes{kubernetes_pod=~\"$pod\"} ",
+              "expr": "redis_memory_used_bytes{redis_address=~\"$redis_address\"} ",
               "intervalFactor": 2,
               "legendFormat": "used",
               "metric": "",
@@ -531,7 +531,7 @@
               "target": ""
             },
             {
-              "expr": "redis_memory_max_bytes{kubernetes_pod =~\"$pod\"} ",
+              "expr": "redis_memory_max_bytes{redis_address =~\"$redis_address\"} ",
               "hide": false,
               "intervalFactor": 2,
               "legendFormat": "max",
@@ -609,14 +609,14 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "rate(redis_net_input_bytes_total{kubernetes_pod =\"$pod\"}[5m])",
+              "expr": "rate(redis_net_input_bytes_total{redis_address =\"$redis_address\"}[5m])",
               "intervalFactor": 2,
               "legendFormat": "{{ input }}",
               "refId": "A",
               "step": 240
             },
             {
-              "expr": "rate(redis_net_output_bytes_total{kubernetes_pod =\"$pod\"}[5m])",
+              "expr": "rate(redis_net_output_bytes_total{redis_address =\"$redis_address\"}[5m])",
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "{{ output }}",
@@ -704,7 +704,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum (redis_db_keys{kubernetes_pod =~\"$pod\"}) by (db)",
+              "expr": "sum (redis_db_keys{redis_address =~\"$redis_address\"}) by (db)",
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "{{ db }} ",
@@ -783,7 +783,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum (redis_db_keys{kubernetes_pod =~\"$pod\"}) - sum (redis_db_keys_expiring{kubernetes_pod =~\"$pod\"}) ",
+              "expr": "sum (redis_db_keys{redis_address =~\"$redis_address\"}) - sum (redis_db_keys_expiring{redis_address =~\"$redis_address\"}) ",
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "not expiring",
@@ -792,7 +792,7 @@
               "target": ""
             },
             {
-              "expr": "sum (redis_db_keys_expiring{kubernetes_pod =~\"$pod\"}) ",
+              "expr": "sum (redis_db_keys_expiring{redis_address =~\"$redis_address\"}) ",
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "expiring",
@@ -880,7 +880,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(rate(redis_expired_keys_total{kubernetes_pod =~\"$pod\"}[5m])) by (addr)",
+              "expr": "sum(rate(redis_expired_keys_total{redis_address =~\"$redis_address\"}[5m])) by (addr)",
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "expired",
@@ -890,7 +890,7 @@
               "target": ""
             },
             {
-              "expr": "sum(rate(redis_evicted_keys_total{kubernetes_pod =~\"$pod\"}[5m])) by (addr)",
+              "expr": "sum(rate(redis_evicted_keys_total{redis_address =~\"$redis_address\"}[5m])) by (addr)",
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "evicted",
@@ -968,7 +968,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "topk(5, irate(redis_command_call_duration_seconds_count{kubernetes_pod =~\"$pod\"} [1m]))",
+              "expr": "topk(5, irate(redis_command_call_duration_seconds_count{redis_address =~\"$redis_address\"} [1m]))",
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "{{ cmd }}",
@@ -1050,9 +1050,9 @@
         "hide": 0,
         "includeAll": false,
         "multi": false,
-        "name": "pod",
+        "name": "redis_address",
         "options": [],
-        "query": "label_values(redis_up{tenant=\"tenant-c\"}, kubernetes_pod)",
+        "query": "label_values(redis_up{tenant=\"tenant-a\"}, redis_address)",
         "refresh": 1,
         "regex": "",
         "type": "query"

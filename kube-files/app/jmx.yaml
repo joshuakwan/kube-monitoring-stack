@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jmx-exporter
+  labels:
+    app: jmx-exporter
+    name: jmx-exporter
+    monitoring: runtime_java
+spec:
+  containers:
+  - name: jmx-exporter
+    image: joshuakwan/jmx-exporter
+    ports:
+    - containerPort: 9072
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jmx-exporter-service
+spec:
+  selector:
+    name: jmx-exporter
+  ports:
+  - name: exporter
+    protocol: TCP
+    port: 9072
+    targetPort: 9072

@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: blackbox-exporter
+  namespace: monitoring
+  labels:
+    app: blackbox-exporter
+spec:
+  serviceAccountName: prometheus
+  containers:
+  - name: blackbox-exporter
+    image: 1and1internet/blackbox_exporter
+    ports:
+    - containerPort: 9115
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blackbox-exporter-service
+  namespace: monitoring
+spec:
+  selector:
+    app: blackbox-exporter
+  ports:
+  - protocol: TCP
+    port: 9115
+    targetPort: 9115
